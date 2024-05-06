@@ -18,11 +18,30 @@ function createModale(data) {
       figure.appendChild(img); // Ajouter l'image à la figure
       const trashIcon = document.createElement("i");
       trashIcon.classList.add("fa-solid", "fa-trash-can");
+      trashIcon.id = data[i].id;
+      console.log(trashIcon.id);
       figure.appendChild(trashIcon);
       
+      trashIcon.addEventListener("click" , function() { 
+
+
+        fetch('http://localhost:5678/api/works/' + trashIcon.id, { method: "DELETE", 
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Authorization": 'Bearer ' + storageToken 
+
+        },}) 
+        
+        const stock = data.findIndex(work => work.id == trashIcon.id)
+        data.splice(stock, 1)
+        console.log(data)
+        
+      })
       
-     
-    }
+const storageToken = localStorage.getItem("token");
+      
+
     
 
 
@@ -42,4 +61,4 @@ function createModale(data) {
   });
 
 
-  
+}
