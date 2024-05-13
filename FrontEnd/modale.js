@@ -46,15 +46,7 @@ const storageToken = localStorage.getItem("token");
     // Ajout Photo => FormData l'envoi des données, method POST, preview img createObjetUrl, 
 
     // Envoi des données du formulaire à votre serveur
-    fetch('http://localhost:5678/api/works/', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-     
-      
-      console.log('Réponse du serveur : ', response);
-    })
+  
   }
   
  
