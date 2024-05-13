@@ -36,17 +36,22 @@ function createModale(data) {
         const stock = data.findIndex(work => work.id == trashIcon.id)
         data.splice(stock, 1)
         console.log(data)
-        
+        createGallery(data)
+        createModale(data)
       })
       
 const storageToken = localStorage.getItem("token");
       
 
+    // Ajout Photo => FormData l'envoi des données, method POST, preview img createObjetUrl, 
+
     
-
-
   }
   
+ 
+
+
+
   // Fenêtre Modal :
   
   // Sélection de l'élément avec la classe "cross"
@@ -62,3 +67,39 @@ const storageToken = localStorage.getItem("token");
 
 
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+const addPictureBtn = document.querySelector(".addPictureBtn")
+const modal = document.querySelector(".modal")
+const modal2 = document.querySelector(".modal2")
+
+addPictureBtn.addEventListener("click" , function() {
+  modal.style.display ="none"
+  modal2.style.display ="flex"
+
+})
+});
+
+// Sélection de l'élément d'entrée de fichier
+const input = document.getElementById('photo');
+// Sélection de l'élément img de prévisualisation
+const previewImg = document.getElementById('picturePreviewImg');
+const preview= document.getElementById('picturePreview');
+
+// Ajout d'un gestionnaire d'événements pour le changement dans le champ de fichier
+input.addEventListener('change', function() {
+  // Vérifier si un fichier est sélectionné
+  if (input.files && input.files[0]) {
+    // Créer une URL objet à partir du fichier sélectionné
+    const imageUrl = URL.createObjectURL(input.files[0]);
+    // Assigner l'URL de l'image à l'attribut src de l'élément img de prévisualisation
+    previewImg.src = imageUrl;
+    // Afficher l'élément img de prévisualisation
+    preview.style.display = 'block';
+
+    // Masquer l'élément avec la classe "labelPhoto"
+    const labelPhoto = document.querySelector('.labelPhoto');
+    labelPhoto.style.display = 'none';
+
+  }
+});

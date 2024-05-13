@@ -30,7 +30,7 @@
       </div>
     </section>
     <div class="modal">
-       <div class="container" id="editGallery">
+      <div class="container" id="editGallery">
         <div class="cross"><i class="fa-solid fa-xmark"></i></div>
         <h3 class="modalTitle">Galerie photo</h3>
         <div class="modalContent"></div>
@@ -40,40 +40,40 @@
         </figure> -->
         <div class="bar"></div>
         <div class="addPictureBtn">Ajouter une photo</div>
-      </div> 
-      
-     
-    </div>
-  </div>
-  
-    <div class="modal2">
-    <div class="container" id="addPicture">
-      <div class="cross"><i class="fa-solid fa-xmark"></i></div>
-      <h3 class="modalTitle">Ajout photo</h3>
-      <div class="modalContent2">
-        <form id="addPictureForm" name="addPictureForm">
-          <div class="labelPhoto">
-            <img src="./assets/icons/instagram.png" id="picture"  />
-            <label for="photo" id="browsePictures">+ Ajouter photo</label>
-            <p>jpg, png : 4mo max</p>
-          </div>
-          
-         
-          <label for="title">Titre</label>
-          <input type="text" id="title" name="title" required />
-          <label for="selectCategory">Catégorie</label>
-          <select id="selectCategory" name="selectCategory">
-            <option></option>
-            <option value="Appartements" > Appartements</option>
-            <option value="Objets" > Objets</option>
-          </select>
-        </form>
       </div>
-      <input type="submit" id="valider" value="valider" />
+
+      <div class="modal2">
+        <div class="container" id="addPicture">
+          <div class="cross"><i class="fa-solid fa-xmark"></i></div>
+          <h3 class="modalTitle">Ajout photo</h3>
+          <div class="modalContent2">
+            <form id="addPictureForm" name="addPictureForm">
+              <div class="labelPhoto">
+                <i class="fa-sharp fa-regular fa-image"></i>
+                <label id="browsePictures" for="photo">+ Ajouter photo</label>
+                <p>jpg, png : 4mo max</p>
+              </div>
+              <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" required />
+              <div id="picturePreview" style="display: none">
+                <img src="#" alt="votre image" id="picturePreviewImg" />
+              </div>
+              <label for="title">Titre</label>
+              <input type="text" id="title" name="title" required />
+              <label for="selectCategory">Catégorie</label>
+              <select id="selectCategory" name="selectCategory">
+                <option></option>
+                <option value="Appartements">Appartements</option>
+                <option value="Objets">Objets</option>
+                <option value="Objets">Hôtels & restaurants</option>
+              </select>
+            </form>
+          </div>
+          <div class="bar"></div>
+          <input type="submit" id="valider" value="Valider" />
+        </div>
+      </div>
     </div>
-    </div>
-  </div>
-</div>
+
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
