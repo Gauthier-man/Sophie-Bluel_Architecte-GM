@@ -45,10 +45,43 @@ const storageToken = localStorage.getItem("token");
 
     // Ajout Photo => FormData l'envoi des données, method POST, preview img createObjetUrl, 
 
+
+
     // Envoi des données du formulaire à votre serveur
-  
+      
   }
   
+  const form = document.querySelector("#addPictureForm");
+    const photoInput = document.querySelector("#photo");
+    const photoInputValue = photoInput.files[0];
+
+    form.addEventListener("submit", async function (event) {
+        try {
+            event.preventDefault();
+            const storageToken = localStorage.getItem("token");
+            const formData = new FormData();
+            formData.append("title", document.querySelector("#title").value);
+            formData.append("category", document.querySelector("#selectCategory").value);
+            formData.append("image", photoInputValue);
+            console.log(formData);
+            const response = await fetch('http://localhost:5678/api/works/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    "Authorization": 'Bearer ' + storageToken
+                }
+            })
+            if (response.ok) {
+                console.log("ok")
+
+                
+            } else {
+                console.log("pas ok")
+            }
+        } catch (error) {
+            console.error('Erreur lors de la récupération des données :', error);
+        }
+    });
  
 
 
@@ -62,14 +95,18 @@ const storageToken = localStorage.getItem("token");
   crossElement.addEventListener("click", function() {
       // Sélection de la fenêtre modale
       const modal = document.querySelector(".modal");
+      
       // Masquer la fenêtre modale en changeant son style d'affichage
       modal.style.display = "none";
+      modal2.style.display = "none";
+
+      
   });
 
 
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+
 const addPictureBtn = document.querySelector(".addPictureBtn")
 const modal = document.querySelector(".modal")
 const modal2 = document.querySelector(".modal2")
@@ -79,7 +116,10 @@ addPictureBtn.addEventListener("click" , function() {
   modal2.style.display ="flex"
 
 })
-});
+
+
+
+
 
 // Sélection de l'élément d'entrée de fichier
 const input = document.getElementById('photo');
@@ -103,4 +143,6 @@ input.addEventListener('change', function() {
     labelPhoto.style.display = 'none';
 
   }
+
+
 });

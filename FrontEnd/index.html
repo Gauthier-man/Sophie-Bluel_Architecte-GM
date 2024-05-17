@@ -47,7 +47,7 @@
         <div class="cross"><i class="fa-solid fa-xmark"></i></div>
         <h3 class="modalTitle">Ajout photo</h3>
         <div class="modalContent2">
-          <form id="addPictureForm" name="addPictureForm">
+          <form id="addPictureForm" name="addPictureForm" enctype="multipart/form-data">
             <div class="labelPhoto">
               <i class="fa-sharp fa-regular fa-image"></i>
               <label id="browsePictures" for="photo">+ Ajouter photo</label>
@@ -55,21 +55,21 @@
             </div>
             <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" required />
             <div id="picturePreview" style="display: none">
-              <img src="#" alt="votre image" id="picturePreviewImg" />
+              <img src="#" alt="votre image" id="picturePreviewImg" name="imageUrl" />
             </div>
             <label for="title">Titre</label>
             <input type="text" id="title" name="title" required />
             <label for="selectCategory">Catégorie</label>
-            <select id="selectCategory" name="selectCategory">
+            <select id="selectCategory" name="category">
               <option></option>
-              <option value="Appartements">Appartements</option>
-              <option value="Objets">Objets</option>
-              <option value="Objets">Hôtels & restaurants</option>
+              <option value="1">Appartements</option>
+              <option value="2">Objets</option>
+              <option value="3">Hôtels & restaurants</option>
             </select>
+            <input type="submit" id="valider" value="Valider" />
           </form>
         </div>
         <div class="bar"></div>
-        <input type="submit" id="valider" value="Valider" />
       </div>
     </div>
 
