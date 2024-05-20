@@ -58,12 +58,16 @@ const storageToken = localStorage.getItem("token");
     form.addEventListener("submit", async function (event) {
         try {
             event.preventDefault();
+            //Récupération du token
             const storageToken = localStorage.getItem("token");
+
             const formData = new FormData();
+            // Ajout de données au FormData
             formData.append("title", document.querySelector("#title").value);
             formData.append("category", document.querySelector("#selectCategory").value);
             formData.append("image", photoInputValue);
             console.log(formData);
+            // Envoi des données à l'API
             const response = await fetch('http://localhost:5678/api/works/', {
                 method: 'POST',
                 body: formData,
@@ -71,9 +75,11 @@ const storageToken = localStorage.getItem("token");
                     "Authorization": 'Bearer ' + storageToken
                 }
             })
+            // Vérification de la réponse
             if (response.ok) {
+              
                 console.log("ok")
-
+                alert("Envoyé avec succés : ");
                 
             } else {
                 console.log("pas ok")
