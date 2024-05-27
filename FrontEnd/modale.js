@@ -111,7 +111,7 @@ function createModale(data) {
     }
   }
 
-  titleInput.addEventListener('input', checkFormValidity)
+  titleInput.addEventListener('input', checkFormValidity);
   categorySelect.addEventListener('change', checkFormValidity);
   photoInput.addEventListener('change', function () {
     if (photoInput.files && photoInput.files[0]) {
