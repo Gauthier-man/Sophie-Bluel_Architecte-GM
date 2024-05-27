@@ -383,11 +383,18 @@ a {
 	z-index: 2;
 
 }
-.cross {
+.cross  {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
 	justify-content: flex-end;
+}
+
+.cross2 {
+
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .modal i {
@@ -563,4 +570,11 @@ a {
 #picturePreview img {
 	
 	object-fit: cover;
+  }
+
+  #error-message {
+
+	color: purple;
+	margin-top: 10px;
+
   }

@@ -2,6 +2,14 @@
 document.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  // const errorMessage = document.getElementById('error-message');
+  // errorMessage.style.display = 'none';
+
+  function MessageError() {
+    document.getElementById("error-message").style.display = "block";
+    document.querySelector(".hidden").style.display = "block";
+  }
+
   // Récupérer les valeurs de l'email et du mot de passe du formulaire
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
@@ -31,24 +39,23 @@ document.addEventListener("submit", async (e) => {
       
       alert("Vous êtes maintenant connecté !");
   }
-  // Comparaison avec les informations de connexion de Sophie Bluel
-        if (email === 'sophie.bluel@test.tld' && password === 'S0phie') {
-            // Redirection vers la page d'accueil
-            window.location.href = 'index.html';
-        } else {
-            // Affichage d'un message d'erreur
-            const errorMessage = document.createElement('p');
-            errorMessage.textContent = 'Email ou mot de passe incorrect';
-            errorMessage.style.color = 'purple';
-            const form = document.getElementById('login-form');
-            form.appendChild(errorMessage);
-        }
-    // Vérifier si la réponse est un succès
- 
-      // Si la réponse n'est pas OK, afficher une alerte
-     
-    
+  else {
+    // Affichage d'un message d'erreur
+    const existingErrorMessage = document.getElementById('error-message');
+    if (!existingErrorMessage) {
+      const errorMessage = document.createElement('p');
+      errorMessage.id = 'error-message';
+      errorMessage.textContent = 'Email ou mot de passe incorrect';
+      errorMessage.style.color = 'purple';
+      errorMessage.style.marginTop = '20px';
+      const form = document.getElementById('login-form');
+      const passwordInput = document.getElementById('password');
+      form.appendChild(errorMessage);
+    }
+  }
   } catch (error) {
     console.error("Erreur lors de la soumission du formulaire :", error);
-  }
+  } 
+
+  
 });

@@ -1,154 +1,173 @@
 function createModale(data) {
+  const modalContent = document.querySelector(".modalContent");
 
-  const modalContent= document.querySelector(".modalContent");
-    
-    // Nettoyer la galerie avant d'ajouter de nouveaux éléments
-    modalContent.innerHTML = '';
-  
-    // Parcourir les données récupérées depuis l'API pour créer les éléments de la galerie
-    for (let i = 0; i < data.length; i++) {
-    
-      
-      const figure = document.createElement("figure"); // Créer un élément "figure" pour chaque image
+  // Nettoyer la galerie avant d'ajouter de nouveaux éléments
+  modalContent.innerHTML = '';
+
+  // Parcourir les données récupérées depuis l'API pour créer les éléments de la galerie
+  data.forEach(item => {
+      const figure = document.createElement("figure");
       figure.classList.add("miniWork");
-      modalContent.appendChild(figure);// Ajouter la figure à la galerie
-      const img = document.createElement("img");   // Créer un élément "img" pour afficher l'image
-      img.src = data[i].imageUrl; // Définir la source de l'image
-      img.alt = data[i].title;  // Définir le texte alternatif de l'image
-      figure.appendChild(img); // Ajouter l'image à la figure
+      modalContent.appendChild(figure);
+
+      const img = document.createElement("img");
+      img.src = item.imageUrl;
+      img.alt = item.title;
+      figure.appendChild(img);
+
       const trashIcon = document.createElement("i");
       trashIcon.classList.add("fa-solid", "fa-trash-can");
-      trashIcon.id = data[i].id;
-      console.log(trashIcon.id);
+      trashIcon.id = item.id;
       figure.appendChild(trashIcon);
-      
-      trashIcon.addEventListener("click" , function() { 
 
+      trashIcon.addEventListener("click", async function () {
+          try {
+              const response = await fetch(`http://localhost:5678/api/works/${trashIcon.id}`, {
+                  method: "DELETE",
+                  headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                      "Authorization": `Bearer ${localStorage.getItem("token")}`
+                  },
+              });
 
-        fetch('http://localhost:5678/api/works/' + trashIcon.id, { method: "DELETE", 
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Authorization": 'Bearer ' + storageToken 
+              if (response.ok) {
+                  const index = data.findIndex(work => work.id === parseInt(trashIcon.id));
+                  if (index !== -1) {
+                      data.splice(index, 1);
+                      figure.remove(); // Supprimer l'élément du DOM
+                      createGallery(data); // Mettre à jour la galerie
+                  }
+              } else {
+                  console.error("Erreur lors de la suppression de l'élément :", response.statusText);
+              }
+          } catch (error) {
+              console.error('Erreur lors de la suppression de l\'élément :', error);
+          }
+      });
+  });
 
-        },}) 
-        
-        const stock = data.findIndex(work => work.id == trashIcon.id)
-        data.splice(stock, 1)
-        console.log(data)
-        createGallery(data)
-        createModale(data)
-      })
-      
-const storageToken = localStorage.getItem("token");
-      
-
-    // Ajout Photo => FormData l'envoi des données, method POST, preview img createObjetUrl, 
-
-
-
-    // Envoi des données du formulaire à votre serveur
-      
-  }
-  
+  // Gestion du formulaire d'ajout de photo
   const form = document.querySelector("#addPictureForm");
-    const photoInput = document.querySelector("#photo");
-    const photoInputValue = photoInput.files[0];
+  const photoInput = document.querySelector("#photo");
+  const photoInputValue = () => photoInput.files[0];
 
-    form.addEventListener("submit", async function (event) {
-        try {
-            event.preventDefault();
-            //Récupération du token
-            const storageToken = localStorage.getItem("token");
+  form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      try {
+          const storageToken = localStorage.getItem("token");
 
-            const formData = new FormData();
-            // Ajout de données au FormData
-            formData.append("title", document.querySelector("#title").value);
-            formData.append("category", document.querySelector("#selectCategory").value);
-            formData.append("image", photoInputValue);
-            console.log(formData);
-            // Envoi des données à l'API
-            const response = await fetch('http://localhost:5678/api/works/', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    "Authorization": 'Bearer ' + storageToken
-                }
-            })
-            // Vérification de la réponse
-            if (response.ok) {
+          const formData = new FormData();
+          formData.append("title", document.querySelector("#title").value);
+          formData.append("category", document.querySelector("#selectCategory").value);
+          formData.append("image", photoInputValue());
+
+          const response = await fetch('http://localhost:5678/api/works/', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                  "Authorization": `Bearer ${storageToken}`
+              }
+          });
+
+          if (response.ok) {
+              alert("Envoyé avec succès !");
+              const newData = await response.json();
+              data.push(newData);
+              createGallery(data);
+              createModale(data);
+              form.reset();
+              document.querySelector('#picturePreview').style.display = 'none';
+              document.querySelector('.labelPhoto').style.display = 'flex';
+              modal2.style.display = "none";
+              checkFormValidity();
+          } else {
+              console.error("Erreur lors de l'envoi des données :", response.statusText);
               
-                console.log("ok")
-                alert("Envoyé avec succés : ");
-                
-            } else {
-                console.log("pas ok")
-            }
-        } catch (error) {
-            console.error('Erreur lors de la récupération des données :', error);
-        }
-    });
- 
+          }
+      } catch (error) {
+          console.error('Erreur lors de l\'envoi des données :', error);
+      }
+  }, { once: true });
+
+
+// Condition pour le bouton "Valider"
+
+  const titleInput = document.getElementById('title');
+  const categorySelect = document.getElementById('selectCategory');
+  const submitButton = document.getElementById('valider');
 
 
 
-  // Fenêtre Modal :
-  
-  // Sélection de l'élément avec la classe "cross"
-  const crossElement = document.querySelector(".cross");
-  
-  // Ajout d'un gestionnaire d'événements pour le clic sur la croix
-  crossElement.addEventListener("click", function() {
-      // Sélection de la fenêtre modale
-      const modal = document.querySelector(".modal");
-      
-      // Masquer la fenêtre modale en changeant son style d'affichage
-      modal.style.display = "none";
-      modal2.style.display = "none";
+  function checkFormValidity() {
+    const isTitleFilled = titleInput.value.trim() !== '';
+    const isCategorySelected = categorySelect.value !== '';
+    const isPhotoAdded = previewImg.src !== '#';
 
-      
+    if (isTitleFilled && isCategorySelected && isPhotoAdded) {
+      submitButton.style.backgroundColor = '#1D6154';
+    } else {
+      submitButton.style.backgroundColor = '';
+    }
+  }
+
+  titleInput.addEventListener('input', checkFormValidity);
+  categorySelect.addEventListener('change', checkFormValidity);
+  photoInput.addEventListener('change', function () {
+    if (photoInput.files && photoInput.files[0]) {
+      const imageUrl = URL.createObjectURL(photoInput.files[0]);
+      previewImg.src = imageUrl;
+      preview.style.display = 'block';
+      document.querySelector('.labelPhoto').style.display = 'none';
+      checkFormValidity();
+    } else {
+      preview.style.display = 'none';
+      document.querySelector('.labelPhoto').style.display = 'flex';
+      checkFormValidity();
+    }
   });
 
 
+  // Gestion des fenêtres modales
+  const crossElement = document.querySelector(".cross");
+  crossElement.addEventListener("click", function () {
+      modal.style.display = "none";
+  }, );
+
+  const crossElement2 = document.querySelector(".cross2");
+  crossElement2.addEventListener("click", function () {
+      modal2.style.display = "none";
+  }, );
 }
 
+const addPictureBtn = document.querySelector(".addPictureBtn");
+const modal = document.querySelector(".modal");
+const modal2 = document.querySelector(".modal2");
+const backButton = document.getElementById('backButton');
 
-const addPictureBtn = document.querySelector(".addPictureBtn")
-const modal = document.querySelector(".modal")
-const modal2 = document.querySelector(".modal2")
+backButton.addEventListener('click', () => {
+    modal2.style.display = 'none';
+    modal.style.display = 'flex';
+  });
 
-addPictureBtn.addEventListener("click" , function() {
-  modal.style.display ="none"
-  modal2.style.display ="flex"
-
-})
-
-
-
-
-
-// Sélection de l'élément d'entrée de fichier
-const input = document.getElementById('photo');
-// Sélection de l'élément img de prévisualisation
-const previewImg = document.getElementById('picturePreviewImg');
-const preview= document.getElementById('picturePreview');
-
-// Ajout d'un gestionnaire d'événements pour le changement dans le champ de fichier
-input.addEventListener('change', function() {
-  // Vérifier si un fichier est sélectionné
-  if (input.files && input.files[0]) {
-    // Créer une URL objet à partir du fichier sélectionné
-    const imageUrl = URL.createObjectURL(input.files[0]);
-    // Assigner l'URL de l'image à l'attribut src de l'élément img de prévisualisation
-    previewImg.src = imageUrl;
-    // Afficher l'élément img de prévisualisation
-    preview.style.display = 'block';
-
-    // Masquer l'élément avec la classe "labelPhoto"
-    const labelPhoto = document.querySelector('.labelPhoto');
-    labelPhoto.style.display = 'none';
-
-  }
-
-
+addPictureBtn.addEventListener("click", function () {
+  modal.style.display = "none";
+  modal2.style.display = "flex";
 });
+
+// Gestion de la prévisualisation des images
+const input = document.getElementById('photo');
+const previewImg = document.getElementById('picturePreviewImg');
+const preview = document.getElementById('picturePreview');
+
+input.addEventListener('change', function () {
+  if (input.files && input.files[0]) {
+      const imageUrl = URL.createObjectURL(input.files[0]);
+      previewImg.src = imageUrl;
+      preview.style.display = 'block';
+      document.querySelector('.labelPhoto').style.display = 'none';
+  }
+});
+
+//Condition Ajout (Titre, catégorie) 
+// Login revoir (Message)
