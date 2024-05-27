@@ -94,7 +94,7 @@ function createModale(data) {
 // Condition pour le bouton "Valider"
 
   const titleInput = document.getElementById('title');
-  const categorySelect = document.getElementById('selectCategory');
+  const categorySelect = document.getElementById('selectCategory')
   const submitButton = document.getElementById('valider');
 
 
