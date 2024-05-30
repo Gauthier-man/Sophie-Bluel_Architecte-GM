@@ -56,12 +56,13 @@
               <label id="browsePictures" for="photo">+ Ajouter photo</label>
               <p>jpg, png : 4mo max</p>
             </div>
-            <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" required />
+            <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" />
             <div id="picturePreview" style="display: none">
               <img src="#" alt="votre image" id="picturePreviewImg" name="imageUrl" />
             </div>
             <label for="title">Titre</label>
-            <input type="text" id="title" name="title" required />
+            <input type="text" id="title" name="title" />
+            <p id="errorTitle"></p>
             <label for="selectCategory">Catégorie</label>
             <select id="selectCategory" name="category">
               <option></option>
@@ -69,6 +70,7 @@
               <option value="2">Objets</option>
               <option value="3">Hôtels & restaurants</option>
             </select>
+            <p id="errorTitle"></p>
             <input type="submit" id="valider" value="Valider" />
           </form>
         </div>

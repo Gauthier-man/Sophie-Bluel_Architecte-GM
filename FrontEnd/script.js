@@ -40,6 +40,7 @@ fetch('http://localhost:5678/api/works')
   .then(data => {   // Une fois les données obtenues, exécuter cette fonction
     worksData = data; // Stocker les données des travaux dans la variable globale
     createGallery(data);  // Créer la galerie en utilisant les données récupérées
+    galleryModal(data);
     createModale(data);
 
     // Manipulations supplémentaires des données récupérées peuvent être effectuées ici
