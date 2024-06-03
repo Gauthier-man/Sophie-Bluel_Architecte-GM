@@ -111,10 +111,11 @@ categorySelect.addEventListener('change', checkFormValidity);
 
 
 
+
 function checkFormValidity() {
   const isTitleFilled = titleInput.value.trim() !== '';
   const isCategorySelected = categorySelect.value !== '';
-  const isPhotoAdded = picturePreviewImg.src !== '#';
+  const isPhotoAdded = input.files[0];
 
   const isTitleValid = document.querySelector('#errorTitle');
   const isCategoryValid = document.querySelector('#errorCategory')
@@ -147,12 +148,15 @@ function checkFormValidity() {
     categorySelect.style.border = '';
   }
 
-if (!isPhotoAdded) {
+if (!isPhotoAdded ) {
     isPhotoValid.style.display = 'block';
     isPhotoValid.innerHTML = 'Veuillez ajouter une photo';
     isPhotoValid.style.color = 'red';
     labelPictureDiv.style.border = '1px solid red';
-}   
+}   else {
+    isPhotoValid.style.display = 'none';
+    categorySelect.style.border = '';
+  }
 
   if (isTitleFilled && isCategorySelected && isPhotoAdded) {
     submitButton.style.backgroundColor = '#1D6154';
