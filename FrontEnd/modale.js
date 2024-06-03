@@ -108,24 +108,7 @@ const labelPictureDiv = document.getElementById('labelPicture');
 
 titleInput.addEventListener('input', checkFormValidity);
 categorySelect.addEventListener('change', checkFormValidity);
-photoInput.addEventListener('change', handlePhotoChange);
-  
 
-function handlePhotoChange() {
-    const file = photoInput.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        picturePreviewImg.src = e.target.result;
-        document.getElementById('picturePreview').style.display = 'block';
-      }
-      reader.readAsDataURL(file);
-    } else {
-      picturePreviewImg.src = '#';
-      document.getElementById('picturePreview').style.display = 'none';
-    }
-    checkFormValidity();
-  }
 
 
 function checkFormValidity() {
