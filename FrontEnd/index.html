@@ -51,12 +51,13 @@
         <h3 class="modalTitle">Ajout photo</h3>
         <div class="modalContent2">
           <form id="addPictureForm" name="addPictureForm" enctype="multipart/form-data">
-            <div class="labelPhoto">
+            <div class="labelPhoto" id="labelPicture">
               <i class="fa-sharp fa-regular fa-image"></i>
               <label id="browsePictures" for="photo">+ Ajouter photo</label>
               <p>jpg, png : 4mo max</p>
             </div>
             <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" />
+            <p id="errorPhoto"></p>
             <div id="picturePreview" style="display: none">
               <img src="#" alt="votre image" id="picturePreviewImg" name="imageUrl" />
             </div>
@@ -70,7 +71,7 @@
               <option value="2">Objets</option>
               <option value="3">Hôtels & restaurants</option>
             </select>
-            <p id="errorTitle"></p>
+            <p id="errorCategory"></p>
             <input type="submit" id="valider" value="Valider" />
           </form>
         </div>

@@ -52,7 +52,7 @@ function createModale(data) {
 
 // Gestion du formulaire d'ajout de photo
 const form = document.querySelector("#addPictureForm");
-const photoInput = document.querySelector("#photo");
+const photoInput = document.getElementById('photo');
 const photoInputValue = () => photoInput.files[0];
 
 form.addEventListener("submit", async function (event) {
@@ -99,30 +99,77 @@ form.addEventListener("submit", async function (event) {
 
 const titleInput = document.getElementById('title');
 const categorySelect = document.getElementById('selectCategory');
+// const photoInput = document.getElementById('photo');
+const picturePreviewImg = document.getElementById('picturePreviewImg');
 const submitButton = document.getElementById('valider');
+const labelPictureDiv = document.getElementById('labelPicture');
+// const photoAdd = document.getElementById('labelPicture')
 
-  titleInput.addEventListener('input', checkFormValidity);
+
+titleInput.addEventListener('input', checkFormValidity);
+categorySelect.addEventListener('change', checkFormValidity);
+photoInput.addEventListener('change', handlePhotoChange);
+  
+
+function handlePhotoChange() {
+    const file = photoInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        picturePreviewImg.src = e.target.result;
+        document.getElementById('picturePreview').style.display = 'block';
+      }
+      reader.readAsDataURL(file);
+    } else {
+      picturePreviewImg.src = '#';
+      document.getElementById('picturePreview').style.display = 'none';
+    }
+    checkFormValidity();
+  }
+
 
 function checkFormValidity() {
   const isTitleFilled = titleInput.value.trim() !== '';
   const isCategorySelected = categorySelect.value !== '';
-  const isPhotoAdded = previewImg.src !== '#';
+  const isPhotoAdded = picturePreviewImg.src !== '#';
+
   const isTitleValid = document.querySelector('#errorTitle');
-  const isCategoryValid = document.querySelector('#selectCategory')
+  const isCategoryValid = document.querySelector('#errorCategory')
+  const isPhotoValid = document.querySelector('#errorPhoto');
+//   const isPhotoValid = document.querySelector('.labelPhoto');
+//   const isPictureValid = document.querySelector('#labelPicture');
+
 
   if (!isTitleFilled) {
       isTitleValid.style.display = 'block';
       isTitleValid.innerHTML = 'Veuillez renseigner un titre';
       isTitleValid.style.color = 'red';
       titleInput.style.border = '1px solid red';
+
+      
+  } else {
+    errorTitle.style.display = 'none';
+    titleInput.style.border = '';
   }
+
+
 
   if (!isCategorySelected) {
     isCategoryValid.style.display = 'block';
-    isCategoryValid.innerHTML = 'Veuillez renseigner un titre';
+    isCategoryValid.innerHTML = 'Veuillez renseigner une catégorie';
     isCategoryValid.style.color = 'red';
     categorySelect.style.border = '1px solid red';
-}
+} else {
+    errorCategory.style.display = 'none';
+    categorySelect.style.border = '';
+  }
+
+if (!isPhotoAdded) {
+    isPhotoValid.style.display = 'block';
+    isPhotoValid.innerHTML = 'Veuillez ajouter une photo';
+    isPhotoValid.style.color = 'red';
+    labelPictureDiv.style.border = '1px solid red';
+}   
 
   if (isTitleFilled && isCategorySelected && isPhotoAdded) {
     submitButton.style.backgroundColor = '#1D6154';
@@ -135,7 +182,8 @@ function checkFormValidity() {
 categorySelect.addEventListener('change', checkFormValidity);
 
 
-// Gestion des fenêtres modales
+// Gestion des fenêtres modales^
+
 const crossElement = document.querySelector(".cross");
 crossElement.addEventListener("click", function () {
     modal.style.display = "none";
@@ -178,3 +226,4 @@ if (input.files && input.files[0]) {
 
 //Condition Ajout (Titre, catégorie)
 // Login revoir (Message)
+

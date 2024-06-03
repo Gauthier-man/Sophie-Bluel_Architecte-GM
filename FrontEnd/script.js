@@ -42,7 +42,7 @@ fetch('http://localhost:5678/api/works')
     createGallery(data);  // Créer la galerie en utilisant les données récupérées
     galleryModal(data);
     createModale(data);
-
+  
     // Manipulations supplémentaires des données récupérées peuvent être effectuées ici
     console.log(data); // Pour vérifier les données récupérées dans la console
 
@@ -62,17 +62,32 @@ function openModal() {
 if (localStorage.getItem("token")){
     document.getElementById("modeEdition").classList.remove("hidden");
     modifier();
+    
     document.getElementById("logoutButton").href = "index.html";
+    checkAndHideButton();
     // classList.add
 
 }
 
+function checkAndHideButton() {
+  const token = localStorage.getItem("token");
+  if (token) {
+      const btnCenter = document.querySelector(".btn-center");
+      if (btnCenter) {
+          btnCenter.style.display = "none";
+      }
+  }
+}
 
 
 // Fonction pour déconnecter l'utilisateur
 function logout() {
   // Supprimer le token du localStorage
   localStorage.removeItem("token");
+  
+
+  
+
   
    // Modifier le texte du lien de connexion
   //  document.getElementById("logoutButton").textContent = "Login";
