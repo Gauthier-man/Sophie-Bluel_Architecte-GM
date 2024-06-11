@@ -155,7 +155,7 @@ if (!isPhotoAdded ) {
     labelPictureDiv.style.border = '1px solid red';
 }   else {
     isPhotoValid.style.display = 'none';
-    categorySelect.style.border = '';
+    labelPictureDiv.style.border = '';
   }
 
   if (isTitleFilled && isCategorySelected && isPhotoAdded) {
@@ -165,6 +165,20 @@ if (!isPhotoAdded ) {
     submitButton.style.backgroundColor = '';
   }
 }
+
+// Input File
+
+input.addEventListener('change', function () {
+    if (input.files && input.files[0]) {
+
+        const imageUrl = URL.createObjectURL(input.files[0]);
+        previewImg.src = imageUrl;
+        preview.style.display = 'block';
+        document.querySelector('.labelPhoto').style.display = 'none';
+      
+    }
+    checkFormValidity()
+    });
 
 categorySelect.addEventListener('change', checkFormValidity);
 
@@ -202,14 +216,7 @@ const input = document.getElementById('photo');
 const previewImg = document.getElementById('picturePreviewImg');
 const preview = document.getElementById('picturePreview');
 
-input.addEventListener('change', function () {
-if (input.files && input.files[0]) {
-    const imageUrl = URL.createObjectURL(input.files[0]);
-    previewImg.src = imageUrl;
-    preview.style.display = 'block';
-    document.querySelector('.labelPhoto').style.display = 'none';
-}
-});
+
 
 //Condition Ajout (Titre, catégorie)
 // Login revoir (Message)
