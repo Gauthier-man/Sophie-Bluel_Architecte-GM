@@ -19,7 +19,7 @@ function createGallery(data) {
 
     const figcaption = document.createElement("figcaption");
     figcaption.innerHTML = work.title;
-    figure.appendChild(figcaption); 
+    figure.appendChild(figcaption); //TEST
   });
 }
 
