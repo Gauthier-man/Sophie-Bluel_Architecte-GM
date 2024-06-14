@@ -9,20 +9,17 @@ function createGallery(data) {
   gallery.innerHTML = ''; // Nettoyer la galerie avant d'ajouter de nouveaux éléments
 
   data.forEach(work => {
-    // Création d'un élément figure pour chaque travail 
     const figure = document.createElement("figure");
     gallery.appendChild(figure);
 
-    // Ajout de l'image
     const img = document.createElement("img");
     img.src = work.imageUrl;
     img.alt = work.title;
     figure.appendChild(img);
 
-    // Ajout du titre
     const figcaption = document.createElement("figcaption");
     figcaption.innerHTML = work.title;
-    figure.appendChild(figcaption);
+    figure.appendChild(figcaption); //TEST
   });
 }
 
@@ -33,7 +30,7 @@ fetch('http://localhost:5678/api/works')
     worksData = data; // Stocker les données des travaux dans la variable globale
     createGallery(data); // Créer la galerie en utilisant les données récupérées
     galleryModal(data);
-    createModale(data);
+    AddPictures(data);
     console.log(data); // Pour vérifier les données récupérées dans la console
 
 
@@ -47,7 +44,7 @@ fetch('http://localhost:5678/api/works')
 function loadFilters() {
   fetch('http://localhost:5678/api/categories')
     .then(response => response.json())
-    .then(apiFilters => {
+    .then(apiCategories => {
       const btnCenterContainer = document.querySelector('.btn-center');
 
       // Ajouter le bouton "Tous" en tant que premier bouton
@@ -59,7 +56,7 @@ function loadFilters() {
       btnCenterContainer.appendChild(allButton);
 
       // Utiliser forEach pour créer un bouton pour chaque catégorie de l'API
-      apiFilters.forEach(category => {
+      apiCategories.forEach(category => {
         const btn = document.createElement('div');
         btn.textContent = category.name;
         btn.classList.add('btn');

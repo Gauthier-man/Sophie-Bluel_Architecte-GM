@@ -48,7 +48,7 @@ const galleryModal = (data) => {
   });
 }
 
-function createModale(data) {
+function AddPictures(data) {
 
 // Gestion du formulaire d'ajout de photo
 const form = document.querySelector("#addPictureForm");
@@ -183,7 +183,7 @@ input.addEventListener('change', function () {
 categorySelect.addEventListener('change', checkFormValidity);
 
 
-// Gestion des fenêtres modales^
+// Gestion des fenêtres modales Cross^
 
 const crossElement = document.querySelector(".cross");
 crossElement.addEventListener("click", function () {
